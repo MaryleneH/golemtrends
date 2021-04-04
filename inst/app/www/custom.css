@@ -1,0 +1,32 @@
+body
+{
+  background-color: white;
+  font-family: Arial;
+}
+
+.navbar-default {
+  background-color: #ced4da;
+  border-color: #ced4da;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-weight: bold;
+
+}
+
+#explic
+{
+  text-align: justify;
+
+}
+
+p,ul
+{
+    font-size: 110%;
+    text-align: justify;
+}
+
+
+
+
+
+

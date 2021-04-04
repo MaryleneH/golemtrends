@@ -1,0 +1,59 @@
+---
+title: "GolemTrends"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GolemTrends}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+L'utilisateur s&eacute;lectionne la liste des mots-cl&eacute; relatifs &agrave; des formats de diffusion de donn&eacute;es.
+
+```{r setup}
+gtrends_lst <- c("csv", "json", "rdf")
+
+```
+
+Ensuite, on utilise le package `gtrendsR` pour requ&ecirc;ter via l'API `Google Trends`. On visualise les premi&egrave;res lignes.
+
+```{r }
+library(gtrendsR)
+library(tidyverse)
+gtrends_api <- gtrends_lst %>% 
+              gtrends(geo = "FR", time = "today+5-y",onlyInterest = TRUE)%>% 
+              pluck("interest_over_time") %>% 
+              dplyr::mutate(hits = as.numeric(hits)) %>%
+              as_tibble()
+
+head(gtrends_api)
+
+```
+
+On construit le premier graphique.
+
+```{r }
+
+library(tidyquant)
+library(plotly)
+
+g1 <- gtrends_api %>% 
+      ggplot(aes(date, hits, color = keyword)) +
+        geom_line() +
+        geom_smooth(span = 0.3, se = FALSE) +
+        theme_tq() +
+        scale_color_tq() +
+        labs(title = "Part des requêtes contenant le mot clé - évolution sur cinq ans - France") 
+    
+    ggplotly(g1)
+
+
+
+```
+
