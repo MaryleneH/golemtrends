@@ -34,4 +34,3 @@ mod_onglet_deux_server <- function(input, output, session){
 
 ## To be copied in the server
 # callModule(mod_onglet_deux_server, "onglet_deux_ui_1")
-

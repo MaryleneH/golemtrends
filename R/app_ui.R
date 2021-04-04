@@ -11,7 +11,15 @@ app_ui <- function(request) {
     # List the first level UI elements here
     navbarPage(paste0("Les requ", "\u00ea","tes sur les formats de fichiers"),
                tabPanel(paste0("Sur les cinq derni", "\u00e8", "res ann", "\u00e9","es"),
-                        mod_onglet_un_ui("onglet_un_ui_1")),
+                        tags$h2("Etape 1 :", id="efface"),
+                        actionButton("bouton_analyse",
+                                     paste0("Charger les donn","\u00e9","ees")),
+                        rep_br(1),
+                        hr(),
+                        tags$h2("Etape 2 : ", id = "efface_aussi"),
+                        mod_onglet_un_ui("onglet_un_ui_1"),
+
+                        ),
                tabPanel("Depuis 2004",
                         mod_onglet_deux_ui("onglet_deux_ui_1")),
                navbarMenu(paste0("Sujets les plus li","\u00e9",

@@ -14,6 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+###Comparaison des tendances google trends des différents mots clés    
+
+
 L'utilisateur s&eacute;lectionne la liste des mots-cl&eacute; relatifs &agrave; des formats de diffusion de donn&eacute;es.
 
 ```{r setup}
@@ -25,18 +29,19 @@ Ensuite, on utilise le package `gtrendsR` pour requ&ecirc;ter via l'API `Google 
 
 ```{r }
 library(gtrendsR)
-library(tidyverse)
+library(dplyr)
+library(purrr)
 gtrends_api <- gtrends_lst %>% 
               gtrends(geo = "FR", time = "today+5-y",onlyInterest = TRUE)%>% 
               pluck("interest_over_time") %>% 
               dplyr::mutate(hits = as.numeric(hits)) %>%
               as_tibble()
 
-head(gtrends_api)
+# head(gtrends_api)
 
 ```
 
-On construit le premier graphique.
+On construit le premier graphique (sur les 5 derni&egrave;res ann&eacute;es).
 
 ```{r }
 
@@ -56,4 +61,47 @@ g1 <- gtrends_api %>%
 
 
 ```
+
+On construit la table qui servira pour le second graphique (depuis 2004)
+
+```{r }
+library(gtrendsR)
+library(dplyr)
+library(purrr)
+gtrends_api_all <- gtrends_lst %>% 
+              gtrends(geo = "FR", time = "all",onlyInterest = TRUE)%>% 
+              pluck("interest_over_time") %>% 
+              dplyr::mutate(hits = as.numeric(hits)) %>%
+              as_tibble()
+
+head(gtrends_api_all)
+
+```
+
+On construit le second graphique
+
+```{r }
+
+library(tidyquant)
+library(plotly)
+
+g2 <- gtrends_api_all %>% 
+      ggplot(aes(date, hits, color = keyword)) +
+        geom_line() +
+        geom_smooth(span = 0.3, se = FALSE) +
+        theme_tq() +
+        scale_color_tq() +
+        labs(title = "Part des requêtes par mot clé - évolution depuis 2004 - France") 
+    
+   ggplotly(g2)
+
+
+
+```
+
+
+###Analyse des requ&ecric;tes li&eacute;es au mot cl&eacute;- **sur les cinq derni&egrave;res ann&eacute;es**
+
+
+
 

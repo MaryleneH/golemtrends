@@ -16,6 +16,12 @@
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
 usethis::use_package( "plotly" )
+usethis::use_package( "dplyr" )
+usethis::use_package( "tidyquant" )
+usethis::use_package( "gtrendsR" )
+usethis::use_package( "purrr" )
+usethis::use_package( "ggplot2" )
+usethis::use_pipe()
 
 ## Add modules ----
 ## Create a module infrastructure in R/

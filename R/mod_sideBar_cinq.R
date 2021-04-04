@@ -7,7 +7,12 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-#' @import plotly
+#' @importFrom gtrendsR gtrends
+#' @importFrom purrr pluck
+#' @importFrom dplyr mutate as_tibble filter
+#' @import tidyquant
+#' @importFrom plotly ggplotly
+#' @import ggplot2
 mod_sideBar_cinq_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -20,7 +25,7 @@ mod_sideBar_cinq_ui <- function(id){
                             label    = paste0("Les termes tap","\u00e9","s dans une requ","\u00ea","te"),
                             multiple = TRUE),
              rep_br(3),
-             actionButton(ns("boutonLancer"), paste0("Lancer l","\u2019","analyse"))
+             actionButton(ns("bouton_lancer"), paste0("Lancer l","\u2019","analyse"))
              )
     )
 
@@ -32,6 +37,20 @@ mod_sideBar_cinq_ui <- function(id){
 #' @noRd
 mod_sideBar_cinq_server <- function(input, output, session,r){
   ns <- session$ns
+
+
+
+  observeEvent(input$bouton_lancer,{
+
+  r$tot <- filter_mots_cles(r$gtrends_api_all,input$search_terms)
+  r$g1 <- gg_trends_graph(r$tot,
+                        paste0("Part des requ","\u00ea","tes contenant le mot cl","\u00e9",
+                               "- ","\u00e9","volution sur cinq ans - France"))
+
+
+
+  })
+
 
 }
 
