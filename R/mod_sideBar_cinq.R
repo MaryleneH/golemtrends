@@ -35,13 +35,16 @@ mod_sideBar_cinq_ui <- function(id){
 #' sideBar_cinq Server Function
 #'
 #' @noRd
-mod_sideBar_cinq_server <- function(input, output, session,r){
+mod_sideBar_cinq_server <- function(input, output, session,r, time){
   ns <- session$ns
+
+if (time == "5") {
 
 
 
   observeEvent(input$bouton_lancer,{
 
+  req(r$gtrends_api_all)
   r$tot <- filter_mots_cles(r$gtrends_api_all,input$search_terms)
   r$g1 <- gg_trends_graph(r$tot,
                         paste0("Part des requ","\u00ea","tes contenant le mot cl","\u00e9",
@@ -50,7 +53,21 @@ mod_sideBar_cinq_server <- function(input, output, session,r){
 
 
   })
+}
 
+if (time == "2004") {
+
+  observeEvent(input$bouton_lancer,{
+    req(r$gtrends_api_all_2004)
+    r$tot <- filter_mots_cles(r$gtrends_api_all_2004,input$search_terms)
+    r$g2 <- gg_trends_graph(r$tot,
+                            paste0("Part des requ","\u00ea","tes contenant le mot cl","\u00e9",
+                                   "- ","\u00e9","volution depuis 2004 - France"))
+
+
+  })
+
+}
 
 }
 

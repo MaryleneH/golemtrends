@@ -102,6 +102,43 @@ g2 <- gtrends_api_all %>%
 
 ###Analyse des requ&ecric;tes li&eacute;es au mot cl&eacute;- **sur les cinq derni&egrave;res ann&eacute;es**
 
+```{r}
+library(tidyverse)
+library(tidyquant)
+library(plotly)
+
+n_terms <- 10
+
+    top_n_related_searches_tbl <- gtrends_lst %>%
+        gtrends(geo = "FR", time = "today+5-y") %>%
+        pluck("related_queries") %>%
+        as_tibble() %>%
+        filter(related_queries == "top") %>%
+        dplyr::mutate(interest = as.numeric(subject)) %>%
+        
+        select(keyword, value, interest) %>%
+        group_by(keyword) %>%
+        arrange(desc(interest)) %>%
+        slice(1:n_terms) %>%
+        ungroup() %>%
+        
+        mutate(value = as_factor(value) %>% fct_reorder(interest))
+    
+    g <- top_n_related_searches_tbl %>%
+        ggplot(aes(value, interest, color = keyword)) +
+        geom_segment(aes(xend = value, yend = 0)) +
+        geom_point() +
+        coord_flip() +
+        facet_wrap(~ keyword, ncol = 1, scales = "free_y") +
+        theme_tq() +
+        scale_color_tq()+
+        labs(y = " ")
+    
+    
+    ggplotly(g)
+```
+
+
 
 
 

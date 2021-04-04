@@ -12,7 +12,7 @@ mod_sideBar_2004_ui <- function(id){
   tagList(
 
     fluidRow(
-      column(3,
+      column(12,mod_GT_explic_ui(ns("GT_explic_ui_2")),
 
     shiny::selectInput(inputId = ns("term_selected"),
                        label = paste0("recherches des sujets li","\u00e9", "s au mot cl","\u00e9"),
@@ -21,8 +21,7 @@ mod_sideBar_2004_ui <- function(id){
                        multiple = FALSE),
     actionButton(ns("bouton"),
                  "GO !")
-      ),
-    column(9)
+      )
     )
 
   )
@@ -31,8 +30,22 @@ mod_sideBar_2004_ui <- function(id){
 #' sideBar_2004 Server Function
 #'
 #' @noRd
-mod_sideBar_2004_server <- function(input, output, session,r){
+mod_sideBar_2004_server <- function(input, output, session, r, time){
   ns <- session$ns
+  if (time == "5") {
+
+    observeEvent(input$bouton,{
+
+      req(r$gtrends_api_all)
+
+
+    })
+
+  }
+
+  if (time == "2004") {
+
+  }
 
 }
 

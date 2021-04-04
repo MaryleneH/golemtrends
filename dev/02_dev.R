@@ -27,6 +27,8 @@ usethis::use_pipe()
 ## Create a module infrastructure in R/
 golem::add_module( name = "onglet_un" )
 golem::add_module( name = "onglet_deux" )
+golem::add_module( name = "sous_onglet_un" )
+golem::add_module( name = "sous_onglet_deux" )
 golem::add_module( name = "sideBar_cinq" )
 golem::add_module( name = "sideBar_2004" )
 golem::add_module( name = "savoirPlus" )

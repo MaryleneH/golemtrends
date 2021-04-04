@@ -21,6 +21,8 @@ app_ui <- function(request) {
 
                         ),
                tabPanel("Depuis 2004",
+                        rep_br(1),
+                        hr(),
                         mod_onglet_deux_ui("onglet_deux_ui_1")),
                navbarMenu(paste0("Sujets les plus li","\u00e9",
                                  "s au mot cl","\u00e9",
@@ -30,13 +32,17 @@ app_ui <- function(request) {
                           tabPanel(paste0("quels sont les autres mots cl","\u00e9", "s
                                    les plus souvent tap","\u00e9", "s dans la requ",
                                           "\u00ea" ,"te ?"),
-                                   mod_sideBar_2004_ui("sideBar_2004_ui_1")
+                                   rep_br(1),
+                                   hr(),
+                                   mod_sous_onglet_un_ui("sous_onglet_un_ui_1")
                                    ),
                           "----",
                           "Depuis 2004",
                           tabPanel(paste0("quels sont les autres mots cl","\u00e9", "s
                                    les plus souvent tap","\u00e9", "s dans la requ",
                                           "\u00ea" ,"te ?"),
+                                   rep_br(1),
+                                   hr(),
                                    mod_sideBar_2004_ui("sideBar_2004_ui_2")
                                    ),
                           "----",

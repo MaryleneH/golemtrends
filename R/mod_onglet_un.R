@@ -32,11 +32,16 @@ mod_onglet_un_server <- function(input, output, session,r){
   ns <- session$ns
 
   output$time_plot <- renderPlotly({
+    validate(
+      need(r$g1,
+           message = paste0("Charger les donn","\u00e9","es et lancer l'analyse")
+      )
+    )
       ggplotly(r$g1)
     })
 
 
-    callModule(mod_sideBar_cinq_server, "sideBar_cinq_ui_1", r = r)
+    callModule(mod_sideBar_cinq_server, "sideBar_cinq_ui_1", r = r,time="5")
 
 
 }

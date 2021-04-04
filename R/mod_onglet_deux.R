@@ -7,6 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom plotly plotlyOutput renderPlotly ggplotly
 mod_onglet_deux_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -24,8 +25,24 @@ mod_onglet_deux_ui <- function(id){
 #' onglet_deux Server Function
 #'
 #' @noRd
-mod_onglet_deux_server <- function(input, output, session){
+mod_onglet_deux_server <- function(input, output, session,r){
   ns <- session$ns
+  output$time_plot_all <- renderPlotly({
+
+    validate(
+      need(r$gtrends_api_all_2004,
+           message = paste0("Retourner onglet 1 et charger les donn","\u00e9","es.")
+      ),
+      need(r$g2,
+           message = paste0("Lancer l'analyse")
+      )
+    )
+
+
+    ggplotly(r$g2)
+  })
+
+  callModule(mod_sideBar_cinq_server, "sideBar_cinq_ui_2", r = r,time="2004")
 
 }
 
