@@ -70,3 +70,5 @@ gg_top_words <- function(liste_top_words){
 
 
 
+
+

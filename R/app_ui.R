@@ -3,6 +3,7 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import waiter
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -12,6 +13,7 @@ app_ui <- function(request) {
     navbarPage(paste0("Les requ", "\u00ea","tes sur les formats de fichiers"),
                tabPanel(paste0("Sur les cinq derni", "\u00e8", "res ann", "\u00e9","es"),
                         tags$h2("Etape 1 :", id="efface"),
+                        use_waiter(),
                         actionButton("bouton_analyse",
                                      paste0("Charger les donn","\u00e9","ees")),
                         rep_br(1),
@@ -39,6 +41,8 @@ app_ui <- function(request) {
                                    ),
                           tabPanel(paste0("focus par mot-cl", "\u00e9", " et leurs autres mots li",
                                    "\u00e9","s"),
+                                   rep_br(1),
+                                   hr(),
                                    mod_sous_onglet_deux_ui("sous_onglet_deux_ui_1")),
                           "----",
                           "Depuis 2004",
@@ -51,6 +55,8 @@ app_ui <- function(request) {
                                    ),
                           tabPanel(paste0("focus par mot-cl", "\u00e9", " et leurs autres mots li",
                                           "\u00e9","s"),
+                                   rep_br(1),
+                                   hr(),
                                    mod_sous_onglet_quatre_ui("sous_onglet_quatre_ui_1")),
                           "----",
                           "Pour en savoir plus",

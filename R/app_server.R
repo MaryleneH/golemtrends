@@ -3,6 +3,7 @@
 #' @param input,output,session Internal parameters for {shiny}.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import waiter
 #' @noRd
 app_server <- function( input, output, session) {
   # List the first level callModules here
@@ -22,8 +23,13 @@ app_server <- function( input, output, session) {
 
     # Création du dataset gtrends_api_allcontenant la table complète
     # de l'ensemble des mots clés
+    waiting_screen <- tagList(
+      spin_flower(),
+      h4(paste0("Chargement des donn","\u00e9","es..."))
+    )
 
     #Dataset contenant les requêtes des 5 dernières années
+    waiter_show(html = waiting_screen, color = "black")
     gtrends_api_all_1 <- creer_dataset(list_terms_all_1,time ="today+5-y",arg_pluck = "interest_over_time")
 
     gtrends_api_all_2 <- creer_dataset(list_terms_all_2,time="today+5-y",arg_pluck = "interest_over_time")
@@ -62,6 +68,7 @@ app_server <- function( input, output, session) {
     removeUI("#efface")
     removeUI("#efface_aussi")
 
+    waiter_hide()
 
   })
 

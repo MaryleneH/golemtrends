@@ -22,6 +22,7 @@ usethis::use_package( "gtrendsR" )
 usethis::use_package( "purrr" )
 usethis::use_package( "ggplot2" )
 usethis::use_package( "forcats" )
+usethis::use_package( "waiter" )
 usethis::use_pipe()
 
 ## Add modules ----
