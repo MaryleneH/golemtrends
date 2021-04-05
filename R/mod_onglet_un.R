@@ -33,8 +33,11 @@ mod_onglet_un_server <- function(input, output, session,r){
 
   output$time_plot <- renderPlotly({
     validate(
+      need(r$gtrends_api_all,
+           message = paste0("Charger les donn","\u00e9","es, puis ")
+      ),
       need(r$g1,
-           message = paste0("Charger les donn","\u00e9","es et lancer l'analyse")
+           message = paste0("Lancer l'analyse")
       )
     )
       ggplotly(r$g1)

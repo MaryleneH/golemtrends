@@ -21,6 +21,7 @@ usethis::use_package( "tidyquant" )
 usethis::use_package( "gtrendsR" )
 usethis::use_package( "purrr" )
 usethis::use_package( "ggplot2" )
+usethis::use_package( "forcats" )
 usethis::use_pipe()
 
 ## Add modules ----
@@ -29,9 +30,13 @@ golem::add_module( name = "onglet_un" )
 golem::add_module( name = "onglet_deux" )
 golem::add_module( name = "sous_onglet_un" )
 golem::add_module( name = "sous_onglet_deux" )
+golem::add_module( name = "sous_onglet_trois" )
+golem::add_module( name = "sous_onglet_quatre")
 golem::add_module( name = "sideBar_cinq" )
 golem::add_module( name = "sideBar_2004" )
+golem::add_module( name = "sideBar_one_keyword" )
 golem::add_module( name = "savoirPlus" )
+golem::add_module( name = "personas" )
 golem::add_module( name = "GT_explic" )
 
 ## Add helper functions ----

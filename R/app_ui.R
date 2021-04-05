@@ -17,6 +17,7 @@ app_ui <- function(request) {
                         rep_br(1),
                         hr(),
                         tags$h2("Etape 2 : ", id = "efface_aussi"),
+                        # tags$h3("", id ="charger"),
                         mod_onglet_un_ui("onglet_un_ui_1"),
 
                         ),
@@ -36,6 +37,9 @@ app_ui <- function(request) {
                                    hr(),
                                    mod_sous_onglet_un_ui("sous_onglet_un_ui_1")
                                    ),
+                          tabPanel(paste0("focus par mot-cl", "\u00e9", " et leurs autres mots li",
+                                   "\u00e9","s"),
+                                   mod_sous_onglet_deux_ui("sous_onglet_deux_ui_1")),
                           "----",
                           "Depuis 2004",
                           tabPanel(paste0("quels sont les autres mots cl","\u00e9", "s
@@ -43,15 +47,18 @@ app_ui <- function(request) {
                                           "\u00ea" ,"te ?"),
                                    rep_br(1),
                                    hr(),
-                                   mod_sideBar_2004_ui("sideBar_2004_ui_2")
+                                   mod_sous_onglet_trois_ui("sous_onglet_trois_ui_1")
                                    ),
+                          tabPanel(paste0("focus par mot-cl", "\u00e9", " et leurs autres mots li",
+                                          "\u00e9","s"),
+                                   mod_sous_onglet_quatre_ui("sous_onglet_quatre_ui_1")),
                           "----",
                           "Pour en savoir plus",
                           tabPanel("Google Trends",
                                    mod_savoirPlus_ui("savoirPlus_ui_1")
                                    ),
                           tabPanel("Comprendre les utilisateurs data de l'Insee",
-                                   mod_savoirPlus_ui("savoirPlus_ui_2")
+                                   mod_personas_ui("personas_ui_1")
                                    )
 
                         )

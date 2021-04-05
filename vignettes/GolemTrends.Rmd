@@ -11,7 +11,10 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
+  
 )
+
+
 ```
 
 
@@ -103,9 +106,11 @@ g2 <- gtrends_api_all %>%
 ###Analyse des requ&ecric;tes li&eacute;es au mot cl&eacute;- **sur les cinq derni&egrave;res ann&eacute;es**
 
 ```{r}
-library(tidyverse)
+library(purrr)
 library(tidyquant)
 library(plotly)
+library(dplyr)
+library(forcats)
 
 n_terms <- 10
 
@@ -136,6 +141,51 @@ n_terms <- 10
     
     
     ggplotly(g)
+```
+
+Enfin, on effectue une analyse graphique des mots cl&eacute;s les plus li&eacute;s (un seul mot-cl&eacute; d'int&eacute;r&ecirc;t) - depuis 2004
+
+```{r}
+
+library(purrr)
+library(tidyquant)
+library(plotly)
+library(forcats)
+
+
+
+  terme_gtrends_all <- c("rdf") %>%gtrends(geo = "FR", time = "all")
+  
+  
+
+    top_n_related_topics_tbl <- terme_gtrends_all %>%
+        pluck("related_topics") %>%
+        as_tibble() %>%
+        filter(related_topics == "top") %>%
+        dplyr::mutate(interest = as.numeric(subject)) %>%
+        
+        select(keyword, value, interest) %>%
+        group_by(keyword) %>%
+        arrange(desc(interest)) %>%
+        slice(1:n_terms) %>%
+        ungroup() %>%
+        
+        mutate(value = as_factor(value) %>% fct_reorder(interest))
+    
+    g_top <- top_n_related_topics_tbl %>%
+        ggplot(aes(value, interest, color = keyword)) +
+        geom_segment(aes(xend = value, yend = 0)) +
+        geom_point() +
+        coord_flip() +
+        facet_wrap(~ keyword, ncol = 1, scales = "free_y") +
+        theme_tq() +
+        labs(x = " ",y = " ")+
+        scale_color_tq()
+        
+    
+    
+    ggplotly(g_top)
+
 ```
 
 

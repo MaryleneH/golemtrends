@@ -17,28 +17,41 @@ gg_trends_graph <- function(dataset, title){
 
 }
 
-creer_dataset <- function(liste_termes,time){
+creer_dataset <- function(liste_termes,time,arg_pluck){
   liste_termes%>%
     gtrends(geo = "FR", time = time,onlyInterest = TRUE)%>%
-    pluck("interest_over_time") %>%
+    pluck(arg_pluck) %>%
     dplyr::mutate(hits = as.numeric(hits)) %>%
     as_tibble()
 }
 
-top_words  <- function(liste_termes,time) {
-  creer_dataset(liste_termes = liste_termes,time = time) %>%
-    ilter(related_queries == "top") %>%
-    dplyr::mutate(interest = as.numeric(subject)) %>%
+creer_dataset_related <- function(liste_termes,time,arg_pluck){
+  liste_termes %>%
+    gtrends(geo = "FR", time = time) %>%
+    pluck(arg_pluck) %>%
+    # pluck("related_queries") %>%
+    as_tibble()
+}
 
+determine_top_words  <- function(liste_termes,time) {
+  creer_dataset_related(liste_termes = liste_termes,
+                time = time,
+                arg_pluck = "related_queries")  %>%
+    filter(related_queries == "top") %>%
+    dplyr::mutate(interest = as.numeric(subject)) %>%
     select(keyword, value, interest) %>%
     group_by(keyword) %>%
     arrange(desc(interest)) %>%
     slice(1:n_terms) %>%
-    ungroup() %>%
-
+    dplyr::ungroup() %>%
     mutate(value = as_factor(value) %>% fct_reorder(interest))
 
 
+}
+
+filter_top_words <- function(dataset,liste_termes){
+  dataset %>%
+    filter(keyword %in% liste_termes)
 }
 
 gg_top_words <- function(liste_top_words){
@@ -50,7 +63,7 @@ gg_top_words <- function(liste_top_words){
     facet_wrap(~ keyword, ncol = 1, scales = "free_y") +
     theme_tq() +
     scale_color_tq()+
-    labs(y = " ")
+    labs(x = " ",y = " ")
 
 }
 
